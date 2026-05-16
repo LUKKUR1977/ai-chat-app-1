@@ -13,12 +13,10 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// ✅ ROOT
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// ✅ CHAT
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
@@ -43,10 +41,10 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-// ✅ NAJWAŻNIEJSZA LINIA 🔥
+// 👇 TU JEST KLUCZ
 const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
-  console.log("🚀 Server działa na porcie", PORT);
+  console.log("🔥 PORT:", PORT);
 });
-``
+
