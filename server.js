@@ -2,13 +2,12 @@ import express from "express";
 
 const app = express();
 
-// ✅ najprostszy test
 app.get("/", (req, res) => {
-  res.send("✅ DZIAŁA SERVER");
+  res.send("✅ DZIAŁA");
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
-  console.log("🔥 SERVER START:", PORT);
+  console.log("🔥 SERVER:", PORT);
 });
