@@ -46,8 +46,8 @@ app.post("/chat", async (req, res) => {
 });
 
 // ✅ PORT (Railway)
-const PORT = process.env.PORT || 3000;
-
+const PORT = process.env.PORT;
+``
 app.listen(PORT, () => {
   console.log("🚀 Server działa na porcie " + PORT);
 });
