@@ -1,5 +1,11 @@
 import express from "express";
 import OpenAI from "openai";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// ✅ potrzebne do ścieżek
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(express.json());
@@ -9,9 +15,9 @@ const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// ✅ STRONA (ładuje index.html)
+// ✅ STRONA GŁÓWNA
 app.get("/", (req, res) => {
-  res.sendFile("index.html", { root: "." });
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
 // ✅ CHAT
@@ -39,10 +45,9 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-// ✅ PORT (dla Railway)
+// ✅ PORT (Railway)
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("🚀 Server działa");
+  console.log("🚀 Server działa na porcie " + PORT);
 });
-``
