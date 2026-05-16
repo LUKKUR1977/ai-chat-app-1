@@ -4,13 +4,14 @@ import OpenAI from "openai";
 const app = express();
 app.use(express.json());
 
+// ✅ OpenAI
 const client = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-// ✅ STRONA GŁÓWNA (ważne!)
+// ✅ STRONA (ładuje index.html)
 app.get("/", (req, res) => {
-  res.send("✅ AI działa 🚀");
+  res.sendFile("index.html", { root: "." });
 });
 
 // ✅ CHAT
@@ -32,15 +33,16 @@ app.post("/chat", async (req, res) => {
 
     res.json({ reply });
 
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
     res.json({ reply: "Błąd AI 💥" });
   }
 });
 
+// ✅ PORT (dla Railway)
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("🚀 Server działa");
 });
-
+``

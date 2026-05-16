@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Chat</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial;
+      background: #212121;
+      color: white;
+    }
+
+    #chat {
+      padding: 20px;
+      height: 80vh;
+      overflow-y: auto;
+    }
+
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 10px;
+      max-width: 60%;
+    }
+
+    .user {
+      background: #007bff;
+      margin-left: auto;
+      text-align: right;
+    }
+
+    .ai {
+      background: #444;
+      margin-right: auto;
+      text-align: left;
+    }
+
+    #inputArea {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #111;
+      padding: 10px;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      background: #007bff;
+      color: white;
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="chat"></div>
+
+<div id="inputArea">
+  <input id="input" placeholder="Napisz wiadomość..." />
+  <button onclick="send()">Wyślij</button>
+</div>
+
+<script>
+async function send() {
+  const input = document.getElementById("input");
+  const chat = document.getElementById("chat");
+
+  const message = input.value;
+
+  chat.innerHTML += `<div class="message user">${message}</div>`;
+
+  const res = await fetch("/chat", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ message }),
+  });
+
+  const data = await res.json();
+
+
