@@ -1,13 +1,8 @@
 {
-  "name": "ai-chat-app",
+  "name": "test-app",
   "version": "1.0.0",
-  "type": "module",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.2"
+    "start": "node index.js"
   }
 }
-
