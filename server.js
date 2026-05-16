@@ -3,25 +3,28 @@ import OpenAI from "openai";
 import path from "path";
 import { fileURLToPath } from "url";
 
-// ✅ ścieżki
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// ✅ app
 const app = express();
 app.use(express.json());
 
-// ✅ OpenAI
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// ✅ strona główna
+// ✅ BEZPIECZNY START
+let client;
+try {
+  client = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+} catch (e) {
+  console.log("OpenAI init error:", e);
+}
+
+// ✅ ROOT
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
+  res.send("✅ SERVER DZIAŁA");
 });
 
-// ✅ chat endpoint
+// ✅ CHAT (safe)
 app.post("/chat", async (req, res) => {
   try {
     const { message } = req.body;
@@ -40,16 +43,24 @@ app.post("/chat", async (req, res) => {
 
     res.json({ reply });
 
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
+    console.log("CHAT ERROR:", e);
     res.json({ reply: "Błąd AI 💥" });
   }
 });
 
-// ✅ NAJWAŻNIEJSZE — PORT (NAPRAWIONE)
-const PORT = process.env.PORT || 3000;
+// ✅ CRASH PROTECTION
+process.on("uncaughtException", (err) => {
+  console.log("UNCAUGHT:", err);
+});
+
+process.on("unhandledRejection", (err) => {
+  console.log("PROMISE ERROR:", err);
+});
+
+// ✅ PORT
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
   console.log("🔥 PORT:", PORT);
 });
-// update
