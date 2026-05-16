@@ -1,0 +1,9 @@
+services:
+  app:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: node server.js
+    ports:
+      - "9191:3000"
